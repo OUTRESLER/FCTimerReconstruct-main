@@ -1,10 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 
+
 public class Frame {
     JFrame frame = new JFrame("Test");
     JPanel grid = new JPanel(new GridLayout(10, 3, 20, 20) );
-    JPanel flow = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    JPanel flow = new JPanel(new FlowLayout());
     Container container = frame.getContentPane();
     public static JDialog modalReplace = new JDialog();
     public static String[] butName = { "dungeon1", "dungeon2", "dungeon3", "dungeon4", "dungeon5", "dungeon6", "dungeon7", "dungeon8", "dungeon9", "dungeon10",
@@ -22,19 +23,19 @@ public class Frame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.setBackground(Color.BLUE);
-        flow.setBackground(Color.RED);
+
         grid.setBackground(Color.DARK_GRAY);
         container.setBackground(Color.ORANGE);
 
+//        container.add(flow, BorderLayout.WEST);
 
-        container.add(grid);
+ //       container.add(grid);
+         flow.add(grid); //было
 
-        container.add(flow, BorderLayout.WEST);
+
 
         modalFrame();
         new TimeMath().timerSecond();
-        grid.setSize(300, 200);
-
     }
     public void buttonsCreator(){
         for (int i = 0; i < 30; ++i) {
@@ -47,9 +48,9 @@ public class Frame {
                     //открытие 30ти JsonManager
                     b.addActionListener(e -> new JsonManager().setClick(finalI));
                     b.add(label);
-
-
+                    b.setPreferredSize(new Dimension(100, 100));
                     grid.add(b);
+
                 }
                 else {
             JButton b = new JButton(butName[i]);

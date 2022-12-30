@@ -86,7 +86,7 @@ public class JsonManager {
         System.out.println("Значение обновлено успешно!");
         Frame.modalReplace.setVisible(false);
     }
-    public void jsonChecker(int value) {
+        public void jsonChecker(int value) {
         Object obj;
         try {
             obj = new JSONParser().parse(new FileReader("timings.json"));
@@ -97,9 +97,9 @@ public class JsonManager {
         JSONObject jsonObject = (JSONObject) jsonArray.get(value);
         String objectJson = (String) jsonObject.get("rollback");
         if (!Objects.equals(objectJson, "none")) {
-
-            return;
-
+           importRollback =  TimeMath.getTimeString();
+            System.out.println(importRollback);
+//            importRollback = (String) jsonObject.get("rollback");
         } else {
         importRollback = null;
         }

@@ -10,6 +10,7 @@ public class TimeMath {
     static long diffInSeconds;
     static String dateT1;
     static String dateT2;
+    static String timeString;
 
     long seconds = TimeMath.getDiffInSeconds();
 
@@ -21,7 +22,8 @@ public class TimeMath {
             long minutes = (seconds % 3600) / 60;
             long secondsToMin = seconds % 60;
 
-            String timeString = String.format("%02d:%02d:%02d:%02d", day, hours, minutes, secondsToMin);
+            //TimeString = String.format("%02d:%02d:%02d:%02d", day, hours, minutes, secondsToMin);
+
 
             System.out.println(timeString);
         });
@@ -59,6 +61,14 @@ public class TimeMath {
 
     public void setDateT2(String dateT2) {
         TimeMath.dateT2 = dateT2;
+    }
+
+    public static String getTimeString() {
+        return timeString;
+    }
+
+    public static void setTimeString(String timeString) {
+        TimeMath.timeString = timeString;
     }
 }
 
