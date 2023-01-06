@@ -10,25 +10,7 @@ public class TimeMath {
     static long diffInSeconds;
     static String dateT1;
     static String dateT2;
-    static String timeString;
-
-    long seconds = TimeMath.getDiffInSeconds();
-
-    public void timerSecond(){
-        Timer timer = new Timer(1000, e -> {
-            seconds--;
-            long day = seconds / 86400;
-            long hours = (seconds % 86400) / 3600;
-            long minutes = (seconds % 3600) / 60;
-            long secondsToMin = seconds % 60;
-
-            //TimeString = String.format("%02d:%02d:%02d:%02d", day, hours, minutes, secondsToMin);
-
-
-            System.out.println(timeString);
-        });
-        timer.start();
-    }
+    public long seconds;
 
     public void timeMath() {
         LocalDateTime date = LocalDateTime.now();
@@ -39,36 +21,40 @@ public class TimeMath {
         dateT2 = dateTime2.format(simpleDate);
         diffInSeconds = java.time.Duration.between(dateTime1, dateTime2).getSeconds();
     }
-    public static long getDiffInSeconds() {
-        return diffInSeconds;
+    public long timeMath2(String rollback) {
+        LocalDateTime date = LocalDateTime.now();
+        LocalDateTime dateTest2 = LocalDateTime.parse(rollback, simpleDate);
+        seconds = java.time.Duration.between(date, dateTest2).getSeconds();
+        return seconds;
     }
+     public long timer(long seconds) {
+         seconds--;
+         long day = seconds / 86400;
+         long hours = (seconds % 86400) / 3600;
+         long minutes = (seconds % 3600) / 60;
+         long secondsToMin = seconds % 60;
+         Frame.check = String.format("%02d:%02d:%02d:%02d", day, hours, minutes, secondsToMin);
 
-    public void setDiffInSeconds(long diffInSeconds) {
-        TimeMath.diffInSeconds = diffInSeconds;
+         return seconds;
+     }
+     public void retString(long ts){
+         Timer lambda_t = new Timer(1000, e -> {
+             System.out.println(ts);
+             long checker2 = ts;
+
+             long checker = timer(ts);
+             checker--;
+             System.out.println("чекер" + checker);
+             timer(checker);
+         });
+
+
+
+         System.out.println("ЛЯМБДА");
+             lambda_t.start();
     }
-
-    public String getDateT1() {
-        return dateT1;
-    }
-
-    public void setDateT1(String dateT1) {
-        TimeMath.dateT1 = dateT1;
-    }
-
     public static String getDateT2() {
         return dateT2;
     }
 
-    public void setDateT2(String dateT2) {
-        TimeMath.dateT2 = dateT2;
-    }
-
-    public static String getTimeString() {
-        return timeString;
-    }
-
-    public static void setTimeString(String timeString) {
-        TimeMath.timeString = timeString;
-    }
 }
-

@@ -86,7 +86,7 @@ public class JsonManager {
         System.out.println("Значение обновлено успешно!");
         Frame.modalReplace.setVisible(false);
     }
-        public void jsonChecker(int value) {
+    public void jsonChecker(int value) {
         Object obj;
         try {
             obj = new JSONParser().parse(new FileReader("timings.json"));
@@ -95,15 +95,60 @@ public class JsonManager {
         }
         JSONArray jsonArray = (JSONArray) obj;
         JSONObject jsonObject = (JSONObject) jsonArray.get(value);
-        String objectJson = (String) jsonObject.get("rollback");
+        String objectJson = (String) jsonObject.get("date");
         if (!Objects.equals(objectJson, "none")) {
-           importRollback =  TimeMath.getTimeString();
-            System.out.println(importRollback);
-//            importRollback = (String) jsonObject.get("rollback");
-        } else {
-        importRollback = null;
+            importRollback = (String) jsonObject.get("rollback");
         }
+        else {
+            importRollback = null;
+        }
+    }
+    public void jsonTimeout(){
+        Object obj;
+        try {
+            obj = new JSONParser().parse(new FileReader("timings.json"));
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+        JSONArray jsonArray = (JSONArray) obj;
+        for(int i = 0; i < 30; i++) {
+            JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+            String rollback = (String) jsonObject.get("rollback");
+            if (!Objects.equals(rollback, "none")){
+                System.out.println("[" + i + "]" + "Значения не пусты");
+                long dif = new TimeMath().timeMath2(rollback);
+                System.out.println(dif);
+                if (dif <= 0){
+                    jsonObject.put("date", "none");
+                    jsonObject.put("rollback", "none");
+                    System.out.println("Значение выпилено");
+                    new JsonManager().jsonClear(i);
+                }
+            }
+        }
+    }
+    public void jsonClear(int i){
+        Object obj;
+        try {
+            obj = new JSONParser().parse(new FileReader("timings.json"));
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+        JSONArray jsonArray = (JSONArray) obj;
+        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
 
+        jsonObject.replace("date", "none");
+        jsonObject.replace("rollback", "none");
+
+        FileWriter writer;
+        try {
+            writer = new FileWriter("timings.json");
+            writer.write(gson.toJson(obj));
+            writer.close();
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void setClick(int butName) {
         this.butName = butName;
@@ -112,9 +157,5 @@ public class JsonManager {
 
     public static String getImportRollback() {
         return importRollback;
-    }
-
-    public void setImportRollback(String importRollback) {
-        JsonManager.importRollback = importRollback;
     }
 }
